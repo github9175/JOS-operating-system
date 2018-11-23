@@ -4,9 +4,11 @@
 
 Exercise 8
 
-- printf.c\kern
-  - vcprintf uses vprintfmt in printfmt.c
-  - putch uses cputchar in console.c\kern (output data to console)
+kern/printf.c, kern/console.c, lib/printfmt.c
 
-- printfmt.c (format printing)\lib
+- printf.c
+  - vcprintf uses vprintfmt in printfmt.c
+  - putch uses cputchar in console.c (output data to console)
+
+- printfmt.c (format printing)
   - vprintfmt uses putch in printf.c
