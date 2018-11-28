@@ -1,6 +1,6 @@
 # JOS-operating-system
 
-Lab 1 notes: Booting a PC
+## Lab 1 notes: Booting a PC
 
 Exercise 8
 
