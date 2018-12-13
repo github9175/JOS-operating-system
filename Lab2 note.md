@@ -28,3 +28,10 @@ Exercise 1
     - uintptr_t
     - size_t
     - phyaddr_t
+    - kern_pgdir
+    - KSTACKTOP  
+    - KSTKSIZE
+    - PADDR
+    - bootstack
+    - UPAGES
+    - PTSIZE
