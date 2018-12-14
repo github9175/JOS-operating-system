@@ -42,7 +42,8 @@ Exercise 1
     - KSTKSIZE: 8*PGSIZE
     - UPAGES: read-only copies of the page structures
 
-   mmu.h (memory management unit)
+   mmu.h: (memory management unit)
+   
     A linear address 'la' has a three-part structure: (page directory [PDX] (10 bit) + page table index [PTX] (10 bit)) [PGNUM] + offset within page [PGOFF] (12 bit)
   
     - PGSIZE: 4096 (bytes mapped by a page)
