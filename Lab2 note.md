@@ -15,23 +15,42 @@ Exercise 1
   - page_insert(): map the physical page 'pp' at virtual address 'va'
   - page_lookup(): return the page mapped at virtual address 'va'
   - page_remove(): unmaps the physical page at virtual address 'va'
+  
+  variables:
+  npages: amount of physical memory in pages
+  npages_basemem: amount of base memory in pages
+  kern_pgdir: kernel's initial page directory
+  pages: physical page state array
+  page_free_list: free list of physical pages
+  bootstack:?
+  
   macro:
-    - PageInfo:
-    - page2pa:
-    - KADDR:
-    - PTE_ADDR:
-    - PTE_P:
-    - PTE_W:
-    - PTE_U:
-    - PDX:
-    - pde_t
-    - uintptr_t
-    - size_t
-    - phyaddr_t
-    - kern_pgdir
-    - KSTACKTOP  
-    - KSTKSIZE
-    - PADDR
-    - bootstack
-    - UPAGES
-    - PTSIZE
+   types.h
+    - size_t: uint32_t (memory object sizes)
+    - pde_t: uint32_t
+    - uintptr_t: uint32_t (numerical values of virtual addresses)
+    - phyaddr_t: uint32_t (physical addresses)
+    
+  pmap.h:
+    - page2pa: pageinfo to physaddr_t, (pp-pages) << PGSHIFT
+    - KADDR: _kaddr, physical address to kernel virtual address
+    - PADDR: _paddr, kernel virtual address to physical address
+    
+   
+    
+   
+    
+   memlayout.h
+    - KERNBASE: 0xF000000
+    - KSTACKTOP: KERNBASE 
+    - KSTKSIZE: 8*PGSIZE
+    - UPAGES: read-only copies of the page structures
+
+   mmu.h (memory management unit)
+  
+    - PGSIZE: 4096 (bytes mapped by a page)
+    - PTSIZE: PGSIZE*NPTENTRIES(1024) (bytes mapped by a page directory entry)
+    - PTE_P: 0x001 present
+    - PTE_W: 0x002 writeable
+    - PTE_U: 0x004 user
+    - PTE_ADDR: 
