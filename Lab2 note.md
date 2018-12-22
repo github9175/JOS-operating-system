@@ -9,8 +9,8 @@ Virtual Memory：The second component of memory management is virtual memory, wh
 You'll write the physical page allocator. It keeps track of which pages are free with a linked list of struct PageInfo objects (which, unlike xv6, are not embedded in the free pages themselves), each corresponding to a physical page.
 
 - kern/pmap.c
-  - mem_init(): 
   - boot_alloc():
+  - mem_init(): create initial page directory, form a virtual page table, set up in pages an npages array of PageInfo, pge_init
   - page_init():
   - page_alloc():
   - page_free() :
