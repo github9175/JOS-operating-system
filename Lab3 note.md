@@ -34,7 +34,7 @@ Start a given environment running in user mode.
 switch from curenv to env e.
 
 ENV from inc/env.h
-'''
+```
 struct Env {
 	struct Trapframe env_tf;	// Saved registers
 	struct Env *env_link;		// Next free Env
@@ -47,5 +47,5 @@ struct Env {
 	// Address space
 	pde_t *env_pgdir;		// Kernel virtual address of page dir
 };
-'''
+```
 ELF,Proghdr
