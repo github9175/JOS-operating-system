@@ -16,12 +16,15 @@ Because we do not yet have a filesystem, we will set up the kernel to load a sta
 
 env_init()
 Initialize all of the Env structures in the envs array and add them to the env_free_list. Also calls env_init_percpu, which configures the segmentation hardware with separate segments for privilege level 0 (kernel) and privilege level 3 (user).
+Set envs
 
 env_setup_vm()
 Allocate a page directory for a new environment and initialize the kernel portion of the new environment's address space.
+e->env_pgdir
 
 region_alloc()
 Allocates and maps physical memory for an environment
+r = page_insert(e->env_pgdir, p, i, PTE_W | PTE_U);
 
 load_icode()
 You will need to parse an ELF binary image, much like the boot loader already does, and load its contents into the user address space of a new environment.
