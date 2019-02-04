@@ -25,3 +25,25 @@ Allocates and maps physical memory for an environment
 
 load_icode()
 You will need to parse an ELF binary image, much like the boot loader already does, and load its contents into the user address space of a new environment.
+
+env_create()
+Allocate an environment with env_alloc and call load_icode to load an ELF binary into it.
+
+env_run()
+Start a given environment running in user mode.
+switch from curenv to env e.
+
+ENV from inc/env.h
+struct Env {
+	struct Trapframe env_tf;	// Saved registers
+	struct Env *env_link;		// Next free Env
+	envid_t env_id;			// Unique environment identifier
+	envid_t env_parent_id;		// env_id of this env's parent
+	enum EnvType env_type;		// Indicates special system environments
+	unsigned env_status;		// Status of the environment
+	uint32_t env_runs;		// Number of times environment has run
+
+	// Address space
+	pde_t *env_pgdir;		// Kernel virtual address of page dir
+};
+ELF,Proghdr
