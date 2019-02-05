@@ -97,3 +97,5 @@ struct Proghdr {
 	uint32_t p_align;
 };
 ```
+
+You will now need to implement basic exception and system call handling, so that it is possible for the kernel to recover control of the processor from user-mode code.
