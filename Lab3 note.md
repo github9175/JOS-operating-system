@@ -158,3 +158,7 @@ Setgate from inc/mmu.h
 }
 ```
 trap_init->traphandler->all_trap->trap->trap_dispatch->page_fault_handler,monitor,syscall->kern/syscall:
+
+lib/entry.S->lib/libmain.c libmain()->umain()
+
+user_mem_check？
