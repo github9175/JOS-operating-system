@@ -159,4 +159,4 @@ Setgate from inc/mmu.h
 ```
 trap:
     trap_dispatch:
-	page_fault_handler
+	page_fault_handler: monitor:
