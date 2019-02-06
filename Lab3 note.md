@@ -157,3 +157,6 @@ Setgate from inc/mmu.h
 	(gate).gd_off_31_16 = (uint32_t) (off) >> 16;		\
 }
 ```
+trap:
+    trap_dispatch:
+	page_fault_handler
