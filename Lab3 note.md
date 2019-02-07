@@ -162,3 +162,10 @@ trap_init->traphandler->all_trap->trap->trap_dispatch->page_fault_handler,monito
 lib/entry.S->lib/libmain.c libmain()->umain()
 
 user_mem_check？
+
+In all three cases, the operating system design must arrange for the following to
+happen. The system must save the processor’s registers for future transparent resume.
+The system must be set up for execution in the kernel. The system must chose a place
+for the kernel to start executing. The kernel must be able to retrieve information about
+the event, e.g., system call arguments. It must all be done securely; the system must
+maintain isolation of user processes and the kernel.
