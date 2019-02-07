@@ -196,3 +196,11 @@ n specifies the index into the IDT. The int instruction performs the following s
 • Push %eip.
 • Clear the IF bit in %eflags, but only on an interrupt.
 • Set %cs and %eip to the values in the descriptor
+
+Figure 3-1 shows the stack after an int instruction completes and there was a
+privilege-level change (the privilege level in the descriptor is lower than CPL). If the
+int instruction didn’t require a privilege-level change, the x86 won’t save %ss and
+%esp. After both cases, %eip is pointing to the address specified in the descriptor table, and the instruction at that address is the next instruction to be executed and the
+first instruction of the handler for int n. It is job of the operating system to implement these handlers, and below we will see what xv6 does.
+An operating system can use the iret instruction to return from an int instruction. It pops the saved values during the int instruction from the stack, and resumes
+execution at the saved %eip.
