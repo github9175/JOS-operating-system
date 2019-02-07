@@ -169,3 +169,9 @@ The system must be set up for execution in the kernel. The system must chose a p
 for the kernel to start executing. The kernel must be able to retrieve information about
 the event, e.g., system call arguments. It must all be done securely; the system must
 maintain isolation of user processes and the kernel.
+
+The basic plan is as follows. An interrupts stops the normal processor loop and
+starts executing a new sequence called an interrupt handler. Before starting the interrupt handler, the processor saves its registers, so that the operating system can restore
+them when it returns from the interrupt. A challenge in the transition to and from
+the interrupt handler is that the processor should switch from user mode to kernel
+mode, and back.
