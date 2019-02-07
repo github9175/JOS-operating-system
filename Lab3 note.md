@@ -190,3 +190,9 @@ n specifies the index into the IDT. The int instruction performs the following s
 • Save %esp and %ss in CPU-internal registers, but only if the target segment selector’s PL < CPL.
 • Load %ss and %esp from a task segment descriptor.
 • Push %ss.
+• Push %esp.
+• Push %eflags.
+• Push %cs.
+• Push %eip.
+• Clear the IF bit in %eflags, but only on an interrupt.
+• Set %cs and %eip to the values in the descriptor
