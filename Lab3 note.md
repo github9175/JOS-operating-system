@@ -175,3 +175,18 @@ starts executing a new sequence called an interrupt handler. Before starting the
 them when it returns from the interrupt. A challenge in the transition to and from
 the interrupt handler is that the processor should switch from user mode to kernel
 mode, and back.
+
+The x86 has 4 protection levels, numbered 0 (most privilege) to 3 (least privilege).
+In practice, most operating systems use only 2 levels: 0 and 3, which are then called
+kernel mode and user mode, respectively. The current privilege level with which the
+x86 executes instructions is stored in %cs register, in the field CPL.
+On the x86, interrupt handlers are defined in the interrupt descriptor table (IDT).
+The IDT has 256 entries, each giving the %cs and %eip to be used when handling the
+corresponding interrupt.
+To make a system call on the x86, a program invokes the int n instruction, where
+n specifies the index into the IDT. The int instruction performs the following steps:
+• Fetch the n’th descriptor from the IDT, where n is the argument of int.
+• Check that CPL in %cs is <= DPL, where DPL is the privilege level in the descriptor.
+• Save %esp and %ss in CPU-internal registers, but only if the target segment selector’s PL < CPL.
+• Load %ss and %esp from a task segment descriptor.
+• Push %ss.
