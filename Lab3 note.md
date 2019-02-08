@@ -223,3 +223,6 @@ pushes %esp, which points at the trap frame it just constructed, onto the stack 
 argument to trap (3318). Then it calls trap (3319). After trap returns, alltraps pops
 the argument off the stack by adding to the stack pointer (3320) and then starts execut
 ing the code at label trapret.
+
+Trap (3401) looks at the hardware trap number tf->trapno to
+decide why it has been called and what needs to be done. 
