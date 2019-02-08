@@ -204,3 +204,16 @@ int instruction didn’t require a privilege-level change, the x86 won’t save 
 first instruction of the handler for int n. It is job of the operating system to implement these handlers, and below we will see what xv6 does.
 An operating system can use the iret instruction to return from an int instruction. It pops the saved values during the int instruction from the stack, and resumes
 execution at the saved %eip.
+
+Tvinit (3367), called from main, sets up the 256 entries in the table idt. Interrupt
+i is handled by the code at the address in vectors[i].
+
+Alltraps (3304) continues to save processor registers: it pushes %ds, %es, %fs, %gs, and the general-purpose registers (3305-3310). The result of this effort is that the
+kernel stack now contains a struct trapframe (0602) containing the processor registers at the time of the trap (see Figure 3-2). The processor pushes %ss, %esp,
+%eflags, %cs, and %eip. The processor or the trap vector pushes an error number,
+and alltraps pushes the rest. 
+
+The processor or the trap vector pushes an error number,
+and alltraps pushes the rest. The trap frame contains all the information necessary
+to restore the user mode processor registers when the kernel returns to the current
+process, so that the processor can continue exactly as it was when the trap started.
