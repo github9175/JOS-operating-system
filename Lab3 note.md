@@ -217,3 +217,9 @@ The processor or the trap vector pushes an error number,
 and alltraps pushes the rest. The trap frame contains all the information necessary
 to restore the user mode processor registers when the kernel returns to the current
 process, so that the processor can continue exactly as it was when the trap started.
+
+Once the segments are set properly, alltraps can call the C trap handler trap. It
+pushes %esp, which points at the trap frame it just constructed, onto the stack as an
+argument to trap (3318). Then it calls trap (3319). After trap returns, alltraps pops
+the argument off the stack by adding to the stack pointer (3320) and then starts execut
+ing the code at label trapret.
