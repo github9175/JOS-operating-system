@@ -235,3 +235,12 @@ Syscall records the return value of the system call function in %eax. When the
 trap returns to user space, it will load the values from cp->tf into the machine registers. Thus, when exec returns, it will return the value that the system call handler returned (3708). System calls conventionally return negative numbers to indicate errors,
 positive numbers for success. If the system call number is invalid, syscall prints an
 error and returns –1.
+
+
+Syscall memory check:
+The kernel has set up the page-table
+hardware to make sure that the process cannot access memory outside its local private
+memory: if a user program tries to read or write memory at an address of p->sz or
+above, the processor will cause a segmentation trap, and trap will kill the process, as
+we saw above. The kernel, however, can derefence any address that the user might
+have passed, so it must check explicitly that the address is below p->sz
