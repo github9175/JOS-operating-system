@@ -226,3 +226,12 @@ ing the code at label trapret.
 
 Trap (3401) looks at the hardware trap number tf->trapno to
 decide why it has been called and what needs to be done. 
+
+For system calls, trap invokes syscall (3701). Syscall loads the system call
+number from the trap frame, which contains the saved %eax, and indexes into the
+system call tables. For the first system call, %eax contains the value SYS_exec (3507),
+and syscall will invoke the SYS_exec’th entry of the system call table, which corresponds to invoking sys_exec.
+Syscall records the return value of the system call function in %eax. When the
+trap returns to user space, it will load the values from cp->tf into the machine registers. Thus, when exec returns, it will return the value that the system call handler returned (3708). System calls conventionally return negative numbers to indicate errors,
+positive numbers for success. If the system call number is invalid, syscall prints an
+error and returns –1.
