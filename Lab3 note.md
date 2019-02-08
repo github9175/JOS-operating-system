@@ -244,3 +244,7 @@ memory: if a user program tries to read or write memory at an address of p->sz o
 above, the processor will cause a segmentation trap, and trap will kill the process, as
 we saw above. The kernel, however, can derefence any address that the user might
 have passed, so it must check explicitly that the address is below p->sz
+
+The system call implementations (for example, sysproc.c and sysfile.c) are typically
+wrappers: they decode the arguments using argint, argptr, and argstr and then call
+the real implementations.
