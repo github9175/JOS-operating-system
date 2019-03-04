@@ -15,3 +15,7 @@ We are going to make JOS support "symmetric multiprocessing" (SMP), a multiproce
 In an SMP system, each CPU has an accompanying local APIC (LAPIC) unit. The LAPIC units are responsible for delivering interrupts throughout the system. The LAPIC also provides its connected CPU with a unique identifier. In this lab, we make use of the following basic functionality of the LAPIC unit (in kern/lapic.c):
 
 Then modify the code in env_alloc() in kern/env.c to ensure that user environments are always run with interrupts enabled.
+
+boot_aps() and mp_main() in kern/init.c
+
+kern/mpentry.S
