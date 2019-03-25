@@ -19,3 +19,5 @@ Then modify the code in env_alloc() in kern/env.c to ensure that user environmen
 boot_aps() and mp_main() in kern/init.c
 
 kern/mpentry.S
+
+
