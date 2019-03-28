@@ -39,3 +39,25 @@ Ideally the sharing would be transparent to user processes. A common approach is
 provide each process with the illusion that it has its own virtual processor, and have
 the operating system multiplex multiple virtual processors on a single physical processor.
 This chapter explains how xv6 multiplexes a processor among several processes.
+
+As shown in Figure 5-1, to switch between processes, xv6 performs two kinds of
+context switches at a low level: from a process’s kernel thread to the current CPU’s
+scheduler thread, and from the scheduler thread to a process’s kernel thread. xv6 never
+directly switches from one user-space process to another; this happens by way of a
+user-kernel transition (system call or interrupt), a context switch to the scheduler, a
+context switch to a new process’s kernel thread, and a trap return. In this section we’ll
+example the mechanics of switching between a kernel thread and a scheduler thread.
+Every xv6 process has its own kernel stack and register set, as we saw in Chapter
+2. Each CPU has a separate scheduler thread for use when it is executing the scheduler
+rather than any process’s kernel thread. Switching from one thread to another involves
+saving the old thread’s CPU registers, and restoring previously-saved registers of
+the new thread; the fact that %esp and %eip are saved and restored means that the
+CPU will switch stacks and switch what code it is executing.
+swtch doesn’t directly know about threads; it just saves and restores register sets,
+called contexts. When it is time for the process to give up the CPU, the process’s kernel
+thread will call swtch to save its own context and return to the scheduler context.
+Each context is represented by a struct context*, a pointer to a structure stored on
+the kernel stack involved. Swtch takes two arguments: struct context **old and
+struct context *new. It pushes the current CPU register onto the stack and saves the
+stack pointer in *old. Then swtch copies new to %esp, pops previously saved registers,
+and returns.
