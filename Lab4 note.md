@@ -85,3 +85,16 @@ The scheduler loops over the process table looking for a runnable process, one
 that has p->state == RUNNABLE. Once it finds a process, it sets the per-CPU current
 process variable proc, switches to the process’s page table with switchuvm, marks the
 process as RUNNING, and then calls swtch to start running it (2722-2728).
+
+One way to think about the structure of the scheduling code is that it arranges to
+enforce a set of invariants about each process, and holds ptable.lock whenever those
+invariants are not true. One invariant is that if a process is RUNNING, things must be
+set up so that a timer interrupt’s yield can correctly switch away from the process;
+this means that the CPU registers must hold the process’s register values (i.e. they
+aren’t actually in a context), %cr3 must refer to the process’s pagetable, %esp must refer
+to the process’s kernel stack so that swtch can push registers correctly, and proc
+must refer to the process’s proc[] slot. Another invariant is that if a process is
+RUNNABLE, things must be set up so that an idle CPU’s scheduler can run it; this
+means that p->context must hold the process’s kernel thread variables, that no CPU
+is executing on the process’s kernel stack, that no CPU’s %cr3 refers to the process’s
+page table, and that no CPU’s proc refers to the process.
