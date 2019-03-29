@@ -80,3 +80,8 @@ context in proc->context and switch to the scheduler context in cpu->scheduler.
 Swtch returns on the scheduler’s stack as though scheduler’s swtch had returned
 (2728). The scheduler continues the for loop, finds a process to run, switches to it, and
 the cycle repeats.
+
+The scheduler loops over the process table looking for a runnable process, one
+that has p->state == RUNNABLE. Once it finds a process, it sets the per-CPU current
+process variable proc, switches to the process’s page table with switchuvm, marks the
+process as RUNNING, and then calls swtch to start running it (2722-2728).
