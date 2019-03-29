@@ -67,3 +67,16 @@ scheduler context. That context had been saved by scheduler’s call to swtch (2
 When the swtch we have been tracing returns, it returns not to sched but to sched-
 uler, and its stack pointer points at the current CPU’s scheduler stack, not initproc’s
 kernel stack.
+
+The last section looked at the low-level details of swtch; now let’s take swtch as a
+given and examine the conventions involved in switching from process to scheduler
+and back to process. A process that wants to give up the CPU must acquire the process
+table lock ptable.lock, release any other locks it is holding, update its own state
+(proc->state), and then call sched. Yield (2772) follows this convention, as do sleep
+and exit, which we will examine later. Sched double-checks those conditions (2757-
+2762) and then an implication of those conditions: since a lock is held, the CPU should
+be running with interrupts disabled. Finally, sched calls swtch to save the current
+context in proc->context and switch to the scheduler context in cpu->scheduler.
+Swtch returns on the scheduler’s stack as though scheduler’s swtch had returned
+(2728). The scheduler continues the for loop, finds a process to run, switches to it, and
+the cycle repeats.
