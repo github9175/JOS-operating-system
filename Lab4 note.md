@@ -61,3 +61,9 @@ the kernel stack involved. Swtch takes two arguments: struct context **old and
 struct context *new. It pushes the current CPU register onto the stack and saves the
 stack pointer in *old. Then swtch copies new to %esp, pops previously saved registers,
 and returns.
+
+In our example, sched called swtch to switch to cpu->scheduler, the per-CPU
+scheduler context. That context had been saved by scheduler’s call to swtch (2728).
+When the swtch we have been tracing returns, it returns not to sched but to sched-
+uler, and its stack pointer points at the current CPU’s scheduler stack, not initproc’s
+kernel stack.
