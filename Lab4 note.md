@@ -98,3 +98,10 @@ RUNNABLE, things must be set up so that an idle CPU’s scheduler can run it; th
 means that p->context must hold the process’s kernel thread variables, that no CPU
 is executing on the process’s kernel stack, that no CPU’s %cr3 refers to the process’s
 page table, and that no CPU’s proc refers to the process.
+
+Scheduling and locks help conceal the existence of one process from another, but
+so far we have no abstractions that help processes intentionally interact. Sleep and
+wakeup fill that void, allowing one process to sleep waiting for an event and another
+process to wake it up once the event has happened. Sleep and wakeup are often called
+sequence coordination or conditional synchronization mechanisms, and there
+are many other similar mechanisms in the operating systems literature.
