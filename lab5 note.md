@@ -19,6 +19,7 @@ The flush_block function should write a block out to disk if necessary.
 va_is_dirty: We will use the VM hardware to keep track of whether a disk block has been modified since it was last read from or written to disk. To see whether a block needs writing, we can just look to see if the PTE_D "dirty" bit is set in the uvpt entry. (The PTE_D bit is set by the processor in response to a write to that page; see 5.2.4.3 in chapter 5 of the 386 reference manual.)
 
 sys_page_map: After writing the block to disk, flush_block should clear the PTE_D bit using sys_page_map.
+PTE_SYSCALL?
  
 fs_init function in fs/fs.c is a prime example of how to use the block cache. 
-PTE_SYSCALL?
+
