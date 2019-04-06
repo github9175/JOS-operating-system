@@ -23,3 +23,9 @@ PTE_SYSCALL?
  
 fs_init function in fs/fs.c is a prime example of how to use the block cache. 
 
+Exercise 3:
+alloc_block:  find a free disk block in the bitmap, mark it used, and return the number of that block. When you allocate a block, you should immediately flush the changed bitmap block to disk with flush_block, to help file system consistency.
+
+call: flush_block?
+
+data structure: bitmap. blockno
