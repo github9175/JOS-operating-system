@@ -29,3 +29,8 @@ alloc_block:  find a free disk block in the bitmap, mark it used, and return the
 call: flush_block?
 
 data structure: bitmap. blockno
+
+Exercise 4:
+file_block_walk: find disk block number for file block number: alloc_block
+
+file_get_block: call file_block_walk, alloc_block, set *blk
