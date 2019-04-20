@@ -41,3 +41,10 @@ call: file_read/fs.c
 being called: serve/serv.c
 
 structure: Fsipc
+
+Exercise 6:
+serve_write():
+
+devfile_write():
+call: fsipc in lib/file.c, memmove
+being called: ?
