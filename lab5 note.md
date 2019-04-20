@@ -34,3 +34,10 @@ Exercise 4:
 file_block_walk: find disk block number for file block number: alloc_block
 
 file_get_block: call file_block_walk, alloc_block, set *blk
+
+Exercise 5:
+serve_read():
+call: file_read/fs.c
+being called: serve/serv.c
+
+structure: Fsipc
