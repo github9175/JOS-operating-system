@@ -1,6 +1,6 @@
 # JOS-operating-system
 
-## Lab5
+## Lab6
 
 The network card driver, however, will not be enough to get your OS hooked up to the Internet. In the new lab6 code, we have provided you with a network stack and a network server. As in previous labs, use git to grab the code for this lab, merge in your own code, and explore the contents of the new net/ directory, as well as the new files in kern/.
 
