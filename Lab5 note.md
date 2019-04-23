@@ -48,3 +48,8 @@ serve_write():
 devfile_write():
 call: fsipc in lib/file.c, memmove
 being called: ?
+
+Exercise 7:
+sys_env_set_trapframe in kern/syscall.c: set envid's trap frame to 'tf';
+
+being called: spawn.c in lib
