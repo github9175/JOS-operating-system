@@ -53,3 +53,4 @@ Exercise 7:
 sys_env_set_trapframe in kern/syscall.c: set envid's trap frame to 'tf';
 
 being called: spawn.c in lib
+The spawn function effectively acts like a fork in UNIX followed by an immediate exec in the child process.
