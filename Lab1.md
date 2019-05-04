@@ -20,7 +20,7 @@ A: /kern/entry.S.
 
 Q:How does the boot loader decide how many sectors it must read in order to fetch the entire kernel from disk? Where does it find this information?
 
-A: It finds out this information from kernel's ELF image. After loading ELF image to 0x10000 as ELFHDR, it finds program header table from ELFHDR + ELFHDR->e_phoff to ELFHDR + ELFHDR->e_phoff + ELFHDR->e_phnum. For each segment, it then reads data to the correspoding physical address ph.p_pa.
+A: It finds out this information from kernel's ELF image. After loading ELF image to 0x10000 as ELFHDR, it finds program header table from ELFHDR + ELFHDR->e_phoff to ELFHDR + ELFHDR->e_phoff + ELFHDR->e_phnum. For each segment ph, it then reads data to the correspoding physical address ph.p_pa.
 
 Part 2:
  
