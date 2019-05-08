@@ -25,6 +25,13 @@ A: It finds out this information from kernel's ELF image. After loading ELF imag
 Part 2:
  
 Examines the boot loader for our 6.828 kernel, which resides in the boot directory of the lab tree. 
- 
+
+Exercise 6:
+Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)
+
+A: The 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader is 0x00000000 * 8.
+The 8 words of memory at 0x00100000 at the point the boot loader enters the kernel is 0x00000000 * 8.
+
+
 Part 3:
  
