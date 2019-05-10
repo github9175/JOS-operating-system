@@ -34,7 +34,24 @@ Exercise 6:
 Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)
 
 A: The 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader is 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000.
-The 8 words of memory at 0x00100000 at the point the boot loader enters the kernel is 0x1badb002 0x00000000, 0xe4524ffe, 0x7205c766, 0x34000004, 0x0000b812, 0x220f0011, 0xc0200fd8. Compare to the content in obj/kern/kernal.asm, it is the corresponding machine code for the boot loader entering the kernel.
+
+The 8 words of memory at 0x00100000 at the point the boot loader enters the kernel is 0x1badb002 0x00000000, 0xe4524ffe, 0x7205c766, 0x34000004, 0x0000b812, 0x220f0011, 0xc0200fd8. Compare to the content in obj/kern/kernal.asm, 
+
+```{r}
+.globl entry
+entry:
+	movw	$0x1234,0x472			# warm boot
+f0100000:	02 b0 ad 1b 00 00    	add    0x1bad(%eax),%dh
+f0100006:	00 00                	add    %al,(%eax)
+f0100008:	fe 4f 52             	decb   0x52(%edi)
+f010000b:	e4                   	.byte 0xe4
+
+f010000c <entry>:
+f010000c:	66 c7 05 72 04 00 00 	movw   $0x1234,0x472
+f0100013:	34 12 
+```
+
+it is the corresponding machine code for the boot loader entering the kernel.
 
 Part 3:
  
