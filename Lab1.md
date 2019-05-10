@@ -16,7 +16,7 @@ A:After loading the kernel image, the boot loader finishes as calling ((void (*)
 
 Q:Where is the first instruction of the kernel?
 
-A: /kern/entry.S.
+A: The code is in /kern/entry.S. The instruction is in *0x10018, which is 0x10000c.
 
 Q:How does the boot loader decide how many sectors it must read in order to fetch the entire kernel from disk? Where does it find this information?
 
