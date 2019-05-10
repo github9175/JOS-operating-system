@@ -58,7 +58,7 @@ f010001a:	0f 22 d8             	mov    %eax,%cr3
 f010001d:	0f 20 c0             	mov    %cr0,%eax
 ```
 
-it is the corresponding machine code for the boot loader entering the kernel.
+it is the corresponding ACSII code for the boot loader entering the kernel.
 
 Part 3:
  
