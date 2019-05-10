@@ -26,6 +26,10 @@ Part 2:
  
 Examines the boot loader for our 6.828 kernel, which resides in the boot directory of the lab tree. 
 
+Exercise 5: Trace through the first few instructions of the boot loader again and identify the first instruction that would "break" or otherwise do the wrong thing if you were to get the boot loader's link address wrong. Then change the link address in boot/Makefrag to something wrong, run make clean, recompile the lab with make, and trace into the boot loader again to see what happens. Don't forget to change the link address back and make clean again afterward!
+
+A: Change the link address to 0x8C00 in boot/Makefrag. Start again from 0x7c00, it went wrong at lgdt instruction: lgdtw -0x739c and got stuck at 0x7c2d: ljmp $0x8, $0x8c32.
+
 Exercise 6:
 Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)
 
