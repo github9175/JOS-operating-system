@@ -49,6 +49,13 @@ f010000b:	e4                   	.byte 0xe4
 f010000c <entry>:
 f010000c:	66 c7 05 72 04 00 00 	movw   $0x1234,0x472
 f0100013:	34 12 
+	movl	$(RELOC(entry_pgdir)), %eax
+f0100015:	b8 00 50 11 00       	mov    $0x115000,%eax
+	movl	%eax, %cr3
+f010001a:	0f 22 d8             	mov    %eax,%cr3
+	# Turn on paging.
+	movl	%cr0, %eax
+f010001d:	0f 20 c0             	mov    %cr0,%eax
 ```
 
 it is the corresponding machine code for the boot loader entering the kernel.
