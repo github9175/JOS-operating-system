@@ -33,9 +33,8 @@ A: Change the link address to 0x8C00 in boot/Makefrag. Start again from 0x7c00, 
 Exercise 6:
 Reset the machine (exit QEMU/GDB and start them again). Examine the 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader, and then again at the point the boot loader enters the kernel. Why are they different? What is there at the second breakpoint? (You do not really need to use QEMU to answer this question. Just think.)
 
-A: The 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader is 0x00000000 * 8.
-The 8 words of memory at 0x00100000 at the point the boot loader enters the kernel is 0x00000000 * 8.
-
+A: The 8 words of memory at 0x00100000 at the point the BIOS enters the boot loader is 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000 0x00000000.
+The 8 words of memory at 0x00100000 at the point the boot loader enters the kernel is 0x1badb002 0x00000000, 0xe4524ffe, 0x7205c766, 0x34000004, 0x0000b812, 0x220f0011, 0xc0200fd8. Compare to the content in obj/kern/kernal.asm, it is the corresponding machine code for the boot loader entering the kernel.
 
 Part 3:
  
