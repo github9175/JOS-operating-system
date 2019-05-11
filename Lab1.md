@@ -87,6 +87,7 @@ vprintfmt:
 printf.c uses void cputchar(int c) in console.c. In addition to cputchar, it contains a position pointer.
 
 > Explain the following from console.c:
+```{r}
 1      if (crt_pos >= CRT_SIZE) {
 2              int i;
 3              memmove(crt_buf, crt_buf + CRT_COLS, (CRT_SIZE - CRT_COLS) * sizeof(uint16_t));
@@ -94,21 +95,24 @@ printf.c uses void cputchar(int c) in console.c. In addition to cputchar, it con
 5                      crt_buf[i] = 0x0700 | ' ';
 6              crt_pos -= CRT_COLS;
 7      }
-
+```
 If the current position is bigger than the screen size, move the whole screen content up a line and fill the last line with ' '. Repoint the pointer to the first position of the last line.
 
-> For the following questions you might wish to consult the notes for Lecture 2. These notes cover GCC's calling convention on the x86.
-Trace the execution of the following code step-by-step:
+> For the following questions you might wish to consult the notes for Lecture 2. These notes cover GCC's calling convention on the x86. Trace the execution of the following code step-by-step:
 
+```{r}
 int x = 1, y = 3, z = 4;
 cprintf("x %d, y %x, z %d\n", x, y, z);
 In the call to cprintf(), to what does fmt point? To what does ap point?
 List (in order of execution) each call to cons_putc, va_arg, and vcprintf. For cons_putc, list its argument as well. For va_arg, list what ap points to before and after the call. For vcprintf list the values of its two arguments.
+```
 
 > Run the following code.
+```{r}
     unsigned int i = 0x00646c72;
     cprintf("H%x Wo%s", 57616, &i);
-What is the output? Explain how this output is arrived at in the step-by-step manner of the previous exercise. Here's an ASCII table that maps bytes to characters.
+```
+> What is the output? Explain how this output is arrived at in the step-by-step manner of the previous exercise. Here's an ASCII table that maps bytes to characters.
 The output depends on that fact that the x86 is little-endian. If the x86 were instead big-endian what would you set i to in order to yield the same output? Would you need to change 57616 to a different value?
 
 > In the following code, what is going to be printed after 'y='? (note: the answer is not a specific value.) Why does this happen?
