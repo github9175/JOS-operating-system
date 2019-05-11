@@ -4,7 +4,8 @@ Part 1:
  
 Getting familiarized with x86 assembly language, the QEMU x86 emulator, and the PC's power-on bootstrap procedure. 
  
-Exercise 3
+
+##### Exercise 3
  
 Q:At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?
 
@@ -12,11 +13,11 @@ A: lgdt gdtdesc set up the Global Descriptor Table and cr0 is modified to turn o
 
 Q:What is the last instruction of the boot loader executed, and what is the first instruction of the kernel it just loaded?
 
-A:After loading the kernel image, the boot loader finishes as calling ((void (*)void)) (ELFHDR->e_entry))(), call *0x10018. The first instruction of the kernel is $0x1234, 0x472.
+A:After loading the kernel image, the boot loader finishes as calling ((void (*)void)) (ELFHDR->e_entry))(), call *0x10018. The first instruction of the kernel is 0x10000c: $0x1234, 0x472.
 
 Q:Where is the first instruction of the kernel?
 
-A: The code is in /kern/entry.S. The instruction is in *0x10018, which is 0x10000c.
+A: The code is in /kern/entry.S. The instruction is in 0x10000c.
 
 Q:How does the boot loader decide how many sectors it must read in order to fetch the entire kernel from disk? Where does it find this information?
 
@@ -61,4 +62,10 @@ f010001d:	0f 20 c0             	mov    %cr0,%eax
 it is the corresponding machine code for the boot loader entering the kernel.
 
 Part 3:
- 
+We will now start to examine the minimal JOS kernel in a bit more detail.
+
+Exercise 7. Use QEMU and GDB to trace into the JOS kernel and stop at the movl %eax, %cr0. Examine memory at 0x00100000 and at 0xf0100000. Now, single step over that instruction using the stepi GDB command. Again, examine memory at 0x00100000 and at 0xf0100000. Make sure you understand what just happened.
+
+What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right.
+
+A: movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because %Eax stores 0xf010002c, an address outside of RAM.
