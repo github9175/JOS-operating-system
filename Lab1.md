@@ -1,13 +1,13 @@
 # JOS-operating-system
  
-### Part 1:
+## Part 1:
  
 Getting familiarized with x86 assembly language, the QEMU x86 emulator, and the PC's power-on bootstrap procedure. 
  
 
 ### Exercise 3
  
-*At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?*
+>At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?
 
 lgdt gdtdesc set up the Global Descriptor Table and cr0 is modified to turn on the protected mode.
 
