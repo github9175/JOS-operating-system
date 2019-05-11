@@ -5,7 +5,7 @@ Part 1:
 Getting familiarized with x86 assembly language, the QEMU x86 emulator, and the PC's power-on bootstrap procedure. 
  
 
-##### Exercise 3
+#### Exercise 3
  
 Q:At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?
 
