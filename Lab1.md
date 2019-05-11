@@ -75,6 +75,13 @@ movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and
 ### Exercise 8. 
 > We have omitted a small fragment of code - the code necessary to print octal numbers using patterns of the form "%o". Find and fill in this code fragment.
 
+```{r}
+vprintfmt:
+    case 'o':
+    	num = getuint(&ap, lflag); // get the number;
+	base = 8;
+	goto: number; // print the number with the corresponding base;
+```
 > Explain the interface between printf.c and console.c. Specifically, what function does console.c export? How is this function used by printf.c?
 
 printf.c uses void cputchar(int c) in console.c. In addition to cputchar, it contains a position pointer.
