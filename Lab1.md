@@ -96,7 +96,7 @@ printf.c uses void cputchar(int c) in console.c. In addition to cputchar, it con
 6              crt_pos -= CRT_COLS;
 7      }
 ```
-If the current position is bigger than the screen size, move the whole screen content up a line and fill the last line with ' '. Repoint the pointer to the first position of the last line.
+If the current position is bigger than the screen size, move the whole screen content up a line and fill the last line with '   '. Repoint the pointer to the first position of the last line.
 
 > For the following questions you might wish to consult the notes for Lecture 2. These notes cover GCC's calling convention on the x86. Trace the execution of the following code step-by-step:
 
