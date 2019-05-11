@@ -7,7 +7,7 @@ Getting familiarized with x86 assembly language, the QEMU x86 emulator, and the 
 
 ### Exercise 3
  
-<font color=gray>At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?<font>
+<span style="color:grey">At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?</span>
 
 A: lgdt gdtdesc set up the Global Descriptor Table and cr0 is modified to turn on the protected mode.
 
