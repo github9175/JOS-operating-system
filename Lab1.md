@@ -84,7 +84,7 @@ vprintfmt:
 ```
 > Explain the interface between printf.c and console.c. Specifically, what function does console.c export? How is this function used by printf.c?
 
-printf.c uses void cputchar(int c) in console.c. In addition to cputchar, it contains a position pointer.
+In /inc/stdio.h, console.c export cputchar, getchar, iscons. printf.c uses void cputchar(int c) in console.c. In addition to cputchar, it contains a position pointer.
 
 > Explain the following from console.c:
 ```{r}
