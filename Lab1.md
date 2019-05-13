@@ -113,7 +113,7 @@ cprintf("x %d, y %x, z %d\n", x, y, z);
 > In the call to cprintf(), to what does fmt point? To what does ap point?
 List (in order of execution) each call to cons_putc, va_arg, and vcprintf. For cons_putc, list its argument as well. For va_arg, list what ap points to before and after the call. For vcprintf list the values of its two arguments.
 
-In the call to cprintf(), fmt = "x %d, y %x, z %d\n", ap = "\001".
+In the call to cprintf(), fmt = "x %d, y %x, z %d\n", ap = "x %d, y %x, z %d\n".
 First vcprintf is called with fmt = "x %d, y %x, z %d\n", ap = "\001". Then for every character in fmt except '%', cons_putc is called with the ASCII code of that character, va_arg is called after escaping with '%'. va_arg changed to "\003" and "\004" after being called.
 
 > Run the following code.
@@ -121,8 +121,11 @@ First vcprintf is called with fmt = "x %d, y %x, z %d\n", ap = "\001". Then for 
     unsigned int i = 0x00646c72;
     cprintf("H%x Wo%s", 57616, &i);
 ```
+    
 > What is the output? Explain how this output is arrived at in the step-by-step manner of the previous exercise. Here's an ASCII table that maps bytes to characters.
 The output depends on that fact that the x86 is little-endian. If the x86 were instead big-endian what would you set i to in order to yield the same output? Would you need to change 57616 to a different value?
+
+The output is "He110 World". In ASCII table, 0x72 = 'r', 0x6c = 'l', 0x64 = 'd'. If it is big-endian, then we should set i to be 0x00646c72.
 
 > In the following code, what is going to be printed after 'y='? (note: the answer is not a specific value.) Why does this happen? 
 ```{r}
@@ -132,3 +135,7 @@ The output depends on that fact that the x86 is little-endian. If the x86 were i
    
 > Let's say that GCC changed its calling convention so that it pushed arguments on the stack in declaration order, so that the last argument is pushed last. How would you have to change cprintf or its interface so that it would still be possible to pass it a variable number of arguments?
 
+### Exercise 9. 
+> Determine where the kernel initializes its stack, and exactly where in memory its stack is located. How does the kernel reserve space for its stack? And at which "end" of this reserved area is the stack pointer initialized to point to?
+
+In entry.S, the kernel initializes its stack at movl $(bootstacktop), %esp. The stack pointer initialized to point to is the highest end.
