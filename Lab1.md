@@ -72,6 +72,11 @@ We will now start to examine the minimal JOS kernel in a bit more detail.
 
 movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because %Eax stores 0xf010002c, an address outside of RAM.
 
+
+>What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right.
+
+movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because %Eax stores 0xf010002c, an address outside of RAM.
+
 ### Exercise 8. 
 > We have omitted a small fragment of code - the code necessary to print octal numbers using patterns of the form "%o". Find and fill in this code fragment.
 
@@ -103,9 +108,13 @@ If the current position is bigger than the screen size, move the whole screen co
 ```{r}
 int x = 1, y = 3, z = 4;
 cprintf("x %d, y %x, z %d\n", x, y, z);
-In the call to cprintf(), to what does fmt point? To what does ap point?
-List (in order of execution) each call to cons_putc, va_arg, and vcprintf. For cons_putc, list its argument as well. For va_arg, list what ap points to before and after the call. For vcprintf list the values of its two arguments.
 ```
+
+> In the call to cprintf(), to what does fmt point? To what does ap point?
+List (in order of execution) each call to cons_putc, va_arg, and vcprintf. For cons_putc, list its argument as well. For va_arg, list what ap points to before and after the call. For vcprintf list the values of its two arguments.
+
+In the call to cprintf(), fmt = "x %d, y %x, z %d\n", ap = "\001".
+First vcprintf is called with fmt = "x %d, y %x, z %d\n", ap = "\001". Then for every character in fmt except '%', cons_putc is called with the ASCII code of that character, va_arg is called after escaping with '%'. va_arg changed to "\003" and "\004" after being called.
 
 > Run the following code.
 ```{r}
@@ -115,8 +124,11 @@ List (in order of execution) each call to cons_putc, va_arg, and vcprintf. For c
 > What is the output? Explain how this output is arrived at in the step-by-step manner of the previous exercise. Here's an ASCII table that maps bytes to characters.
 The output depends on that fact that the x86 is little-endian. If the x86 were instead big-endian what would you set i to in order to yield the same output? Would you need to change 57616 to a different value?
 
-> In the following code, what is going to be printed after 'y='? (note: the answer is not a specific value.) Why does this happen?
+> In the following code, what is going to be printed after 'y='? (note: the answer is not a specific value.) Why does this happen? 
+```{r}
     cprintf("x=%d y=%d", 3);
-    
+ ```
+   y = "\354\377\020\360\004", which is content in the memory address after "\003".
+   
 > Let's say that GCC changed its calling convention so that it pushed arguments on the stack in declaration order, so that the last argument is pushed last. How would you have to change cprintf or its interface so that it would still be possible to pass it a variable number of arguments?
 
