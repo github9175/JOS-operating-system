@@ -127,6 +127,8 @@ The output depends on that fact that the x86 is little-endian. If the x86 were i
 
 The output is "He110 World". In ASCII table, 0x72 = 'r', 0x6c = 'l', 0x64 = 'd'. If it is big-endian, then we should set i to be 0x726c6400.
 
+TODO.
+
 > In the following code, what is going to be printed after 'y='? (note: the answer is not a specific value.) Why does this happen? 
 
 ```{r}
@@ -142,3 +144,8 @@ TODO.
 > Determine where the kernel initializes its stack, and exactly where in memory its stack is located. How does the kernel reserve space for its stack? And at which "end" of this reserved area is the stack pointer initialized to point to?
 
 In entry.S, the kernel initializes its stack at movl $(bootstacktop), %esp. The stack pointer initialized to point to is the highest end.
+
+### Exercise 10. 
+> To become familiar with the C calling conventions on the x86, find the address of the test_backtrace function in obj/kern/kernel.asm, set a breakpoint there, and examine what happens each time it gets called after the kernel starts. How many 32-bit words does each recursive nesting level of test_backtrace push on the stack, and what are those words?
+
+In each call of test_backtrace, push %ebp and push %ebx shows there are two 32-bit words are pushed on the stack. %ebp is the previous function's base pointer and %ebx is previous function's variable. 
