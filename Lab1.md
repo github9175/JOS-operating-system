@@ -154,7 +154,9 @@ In each call of test_backtrace, push %ebp and push %ebx shows there are two 32-b
 >  The backtrace function should display a listing of function call frames in the following format:
 
 > Stack backtrace:
+
 >  ebp f0109e58  eip f0100a62  args 00000001 f0109e80 f0109e98 f0100ed2 00000031
+
 >  ebp f0109ed8  eip f01000d6  args 00000000 00000000 f0100058 f0109f28 00000061
 
 
