@@ -154,9 +154,9 @@ In each call of test_backtrace, push %ebp and push %ebx shows there are two 32-b
 >  The backtrace function should display a listing of function call frames in the following format:
 
 > Stack backtrace:
-  ebp f0109e58  eip f0100a62  args 00000001 f0109e80 f0109e98 f0100ed2 00000031
-  ebp f0109ed8  eip f01000d6  args 00000000 00000000 f0100058 f0109f28 00000061
-  ...
+>  ebp f0109e58  eip f0100a62  args 00000001 f0109e80 f0109e98 f0100ed2 00000031
+>  ebp f0109ed8  eip f01000d6  args 00000000 00000000 f0100058 f0109f28 00000061
+
 
 > Implement the backtrace function as specified above. Use the same format as in the example, since otherwise the grading script will be confused. When you think you have it working right, run make grade to see if its output conforms to what our grading script expects, and fix it if it doesn't. After you have handed in your Lab 1 code, you are welcome to change the output format of the backtrace function any way you like.
 
