@@ -159,7 +159,7 @@ ebp f0109ed8  eip f01000d6  args 00000000 00000000 f0100058 f0109f28 00000061
 ```
 > Implement the backtrace function as specified above. Use the same format as in the example, since otherwise the grading script will be confused. When you think you have it working right, run make grade to see if its output conforms to what our grading script expects, and fix it if it doesn't. After you have handed in your Lab 1 code, you are welcome to change the output format of the backtrace function any way you like.
 
-kern: monitor.c
+kern/monitor.c
 ```{r}
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
@@ -174,6 +174,45 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 		for(int i = 2; i <= 6; i++){
 			cprintf(" %08x", *(ebp+i)); //print the five arguments pushed before
 		}
+		ebp = (uint32_t*)*ebp;
+		cprintf("\n");
+	}
+	return 0;
+}
+```
+
+### Exercise 12. 
+>Modify your stack backtrace function to display, for each eip, the function name, source file name, and line number corresponding to that eip.
+
+kern/kdebug.c
+```{r}
+stab_binsearch(stabs, &lline, &rline, N_SLINE, addr);
+	if(rline < lline) return -1;
+	info->eip_line = stabs[lline].n_desc;
+```
+
+kern/monitor.c
+```{r}
+int
+mon_backtrace(int argc, char **argv, struct Trapframe *tf)
+{
+	// Your code here.
+	
+	uint32_t* ebp = (uint32_t*)read_ebp();
+	cprintf("Stack backtrace:\n");
+	struct Eipdebuginfo info;
+	while(ebp != 0){
+		cprintf("  ebp %08x  ", ebp); //print ebp
+		cprintf("eip %08x  args", *(ebp+1)); //print the return address
+		for(int i = 2; i <= 6; i++){
+			cprintf(" %08x", *(ebp+i)); //print the five arguments pushed before
+		}
+		debuginfo_eip((uintptr_t)ebp[1], &info);
+		cprintf("\t%s:", info.eip_file);
+		cprintf("%d: ", info.eip_line);
+		cprintf("%.*s+", info.eip_fn_namelen, info.eip_fn_name);
+		cprintf("%d\n", ebp[1]-info.eip_fn_addr);
+
 		ebp = (uint32_t*)*ebp;
 		cprintf("\n");
 	}
