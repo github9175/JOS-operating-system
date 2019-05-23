@@ -134,7 +134,7 @@ TODO.
 ```{r}
     cprintf("x=%d y=%d", 3);
  ```
-   y = -267321364 "\354\377\020\360\004".
+   y = -267321364. cprintf calls cprintfmt(..., ap). After printing "3", ap points to the next address that stores the 0xf010ffec, -267321364 in decimal.
  
 > Let's say that GCC changed its calling convention so that it pushed arguments on the stack in declaration order, so that the last argument is pushed last. How would you have to change cprintf or its interface so that it would still be possible to pass it a variable number of arguments?
 
