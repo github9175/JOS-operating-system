@@ -21,7 +21,7 @@ The code is in /kern/entry.S. The instruction is in 0x10000c.
 
 >How does the boot loader decide how many sectors it must read in order to fetch the entire kernel from disk? Where does it find this information?
 
-It finds out this information from kernel's ELF image. After loading ELF image to 0x10000 as ELFHDR, it finds program header table from ELFHDR + ELFHDR->e_phoff to ELFHDR + ELFHDR->e_phoff + ELFHDR->e_phnum. For each segment ph, it then reads data to the correspoding physical address ph.p_pa.
+It finds out this information from kernel's ELF image. After loading ELF image to 0x10000 as ELFHDR, it finds program header table from ELFHDR + ELFHDR->e_phoff to ELFHDR + ELFHDR->e_phoff + ELFHDR->e_phnum. For each segment ph, it then reads data to the corresponding physical address ph.p_pa.
 
 ## Part 2:
  
@@ -42,22 +42,22 @@ The 8 words of memory at 0x00100000 at the point the boot loader enters the kern
 ```{r}
 .globl entry
 entry:
-	movw	$0x1234,0x472			# warm boot
-f0100000:	02 b0 ad 1b 00 00    	add    0x1bad(%eax),%dh
-f0100006:	00 00                	add    %al,(%eax)
-f0100008:	fe 4f 52             	decb   0x52(%edi)
-f010000b:	e4                   	.byte 0xe4
+    movw    $0x1234,0x472            # warm boot
+f0100000:    02 b0 ad 1b 00 00        add    0x1bad(%eax),%dh
+f0100006:    00 00                    add    %al,(%eax)
+f0100008:    fe 4f 52                 decb   0x52(%edi)
+f010000b:    e4                       .byte 0xe4
 
 f010000c <entry>:
-f010000c:	66 c7 05 72 04 00 00 	movw   $0x1234,0x472
-f0100013:	34 12 
-	movl	$(RELOC(entry_pgdir)), %eax
-f0100015:	b8 00 50 11 00       	mov    $0x115000,%eax
-	movl	%eax, %cr3
-f010001a:	0f 22 d8             	mov    %eax,%cr3
-	# Turn on paging.
-	movl	%cr0, %eax
-f010001d:	0f 20 c0             	mov    %cr0,%eax
+f010000c:    66 c7 05 72 04 00 00     movw   $0x1234,0x472
+f0100013:    34 12 
+    movl    $(RELOC(entry_pgdir)), %eax
+f0100015:    b8 00 50 11 00           mov    $0x115000,%eax
+    movl    %eax, %cr3
+f010001a:    0f 22 d8                 mov    %eax,%cr3
+    # Turn on paging.
+    movl    %cr0, %eax
+f010001d:    0f 20 c0                 mov    %cr0,%eax
 ```
 
 it is the corresponding machine code for the boot loader entering the kernel.
@@ -70,12 +70,12 @@ We will now start to examine the minimal JOS kernel in a bit more detail.
 
 >What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right.
 
-movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because %Eax stores 0xf010002c, an address outside of RAM.
+movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because of %Eax stores 0xf010002c, an address outside of RAM.
 
 
 >What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right.
 
-movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because %Eax stores 0xf010002c, an address outside of RAM.
+movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because of %Eax stores 0xf010002c, an address outside of RAM.
 
 ### Exercise 8. 
 > We have omitted a small fragment of code - the code necessary to print octal numbers using patterns of the form "%o". Find and fill in this code fragment.
@@ -83,9 +83,9 @@ movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and
 ```{r}
 vprintfmt:
     case 'o':
-    	num = getuint(&ap, lflag); // get the number;
-	base = 8;
-	goto: number; // print the number with the corresponding base;
+        num = getuint(&ap, lflag); // get the number;
+    base = 8;
+    goto: number; // print the number with the corresponding base;
 ```
 > Explain the interface between printf.c and console.c. Specifically, what function does console.c export? How is this function used by printf.c?
 
@@ -148,7 +148,7 @@ In entry.S, the kernel initializes its stack at movl $(bootstacktop), %esp. The 
 ### Exercise 10. 
 > To become familiar with the C calling conventions on the x86, find the address of the test_backtrace function in obj/kern/kernel.asm, set a breakpoint there, and examine what happens each time it gets called after the kernel starts. How many 32-bit words does each recursive nesting level of test_backtrace push on the stack, and what are those words?
 
-In each call of test_backtrace, push %ebp and push %ebx shows there are two 32-bit words are pushed on the stack. %ebp is the previous function's base pointer and %ebx is previous function's variable. 
+In each call of test_backtrace, push %ebp and push %ebx show there are two 32-bit words are pushed on the stack. %ebp is the previous function's base pointer and %ebx is the previous function's variable. 
 
 ### Exercise 11
 >  The backtrace function should display a listing of function call frames in the following format:
@@ -164,20 +164,20 @@ kern/monitor.c
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
-	// Your code here.
-	
-	uint32_t* ebp = (uint32_t*)read_ebp();
-	cprintf("Stack backtrace:\n");
-	while(ebp != 0){
-		cprintf("  ebp %08x  ", ebp); //print ebp
-		cprintf("eip %08x  args", *(ebp+1)); //print the return address
-		for(int i = 2; i <= 6; i++){
-			cprintf(" %08x", *(ebp+i)); //print the five arguments pushed before
-		}
-		ebp = (uint32_t*)*ebp;
-		cprintf("\n");
-	}
-	return 0;
+    // Your code here.
+    
+    uint32_t* ebp = (uint32_t*)read_ebp();
+    cprintf("Stack backtrace:\n");
+    while(ebp != 0){
+        cprintf("  ebp %08x  ", ebp); //print ebp
+        cprintf("eip %08x  args", *(ebp+1)); //print the return address
+        for(int i = 2; i <= 6; i++){
+            cprintf(" %08x", *(ebp+i)); //print the five arguments pushed before
+        }
+        ebp = (uint32_t*)*ebp;
+        cprintf("\n");
+    }
+    return 0;
 }
 ```
 
@@ -187,8 +187,8 @@ mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 kern/kdebug.c
 ```{r}
 stab_binsearch(stabs, &lline, &rline, N_SLINE, addr);
-	if(rline < lline) return -1;
-	info->eip_line = stabs[lline].n_desc;
+    if(rline < lline) return -1;
+    info->eip_line = stabs[lline].n_desc;
 ```
 
 kern/monitor.c
@@ -196,26 +196,26 @@ kern/monitor.c
 int
 mon_backtrace(int argc, char **argv, struct Trapframe *tf)
 {
-	// Your code here.
-	
-	uint32_t* ebp = (uint32_t*)read_ebp();
-	cprintf("Stack backtrace:\n");
-	struct Eipdebuginfo info;
-	while(ebp != 0){
-		cprintf("  ebp %08x  ", ebp); //print ebp
-		cprintf("eip %08x  args", *(ebp+1)); //print the return address
-		for(int i = 2; i <= 6; i++){
-			cprintf(" %08x", *(ebp+i)); //print the five arguments pushed before
-		}
-		debuginfo_eip((uintptr_t)ebp[1], &info);
-		cprintf("\t%s:", info.eip_file);
-		cprintf("%d: ", info.eip_line);
-		cprintf("%.*s+", info.eip_fn_namelen, info.eip_fn_name);
-		cprintf("%d\n", ebp[1]-info.eip_fn_addr);
+    // Your code here.
+    
+    uint32_t* ebp = (uint32_t*)read_ebp();
+    cprintf("Stack backtrace:\n");
+    struct Eipdebuginfo info;
+    while(ebp != 0){
+        cprintf("  ebp %08x  ", ebp); //print ebp
+        cprintf("eip %08x  args", *(ebp+1)); //print the return address
+        for(int i = 2; i <= 6; i++){
+            cprintf(" %08x", *(ebp+i)); //print the five arguments pushed before
+        }
+        debuginfo_eip((uintptr_t)ebp[1], &info);
+        cprintf("\t%s:", info.eip_file);
+        cprintf("%d: ", info.eip_line);
+        cprintf("%.*s+", info.eip_fn_namelen, info.eip_fn_name);
+        cprintf("%d\n", ebp[1]-info.eip_fn_addr);
 
-		ebp = (uint32_t*)*ebp;
-		cprintf("\n");
-	}
-	return 0;
+        ebp = (uint32_t*)*ebp;
+        cprintf("\n");
+    }
+    return 0;
 }
 ```
