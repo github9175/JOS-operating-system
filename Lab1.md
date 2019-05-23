@@ -60,7 +60,7 @@ f010001a:    0f 22 d8                 mov    %eax,%cr3
 f010001d:    0f 20 c0                 mov    %cr0,%eax
 ```
 
-it is the corresponding machine code for the boot loader entering the kernel.
+it is the corresponding machine code for the boot loader to enter the kernel.
 
 ## Part 3:
 We will now start to examine the minimal JOS kernel in a bit more detail.
@@ -70,12 +70,7 @@ We will now start to examine the minimal JOS kernel in a bit more detail.
 
 >What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right.
 
-movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because of %Eax stores 0xf010002c, an address outside of RAM.
-
-
->What is the first instruction after the new mapping is established that would fail to work properly if the mapping weren't in place? Comment out the movl %eax, %cr0 in kern/entry.S, trace into it, and see if you were right.
-
-movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because of %Eax stores 0xf010002c, an address outside of RAM.
+movl %eax, %cr0 enables paging. After this instruction, memory at 0x00100000 and at 0xf0100000 becomes the same. The first failed instruction if the mapping weren't in place is jmp *%eax. This is because %Eax stores 0xf010002c, an address outside of RAM.
 
 ### Exercise 8. 
 > We have omitted a small fragment of code - the code necessary to print octal numbers using patterns of the form "%o". Find and fill in this code fragment.
@@ -143,12 +138,12 @@ TODO.
 ### Exercise 9. 
 > Determine where the kernel initializes its stack, and exactly where in memory its stack is located. How does the kernel reserve space for its stack? And at which "end" of this reserved area is the stack pointer initialized to point to?
 
-In entry.S, the kernel initializes its stack at movl $(bootstacktop), %esp. The stack pointer initialized to point to is the highest end.
+In entry.S, the kernel initializes its stack at bootstacktop. The stack pointer initialized to point to is the highest end.
 
 ### Exercise 10. 
 > To become familiar with the C calling conventions on the x86, find the address of the test_backtrace function in obj/kern/kernel.asm, set a breakpoint there, and examine what happens each time it gets called after the kernel starts. How many 32-bit words does each recursive nesting level of test_backtrace push on the stack, and what are those words?
 
-In each call of test_backtrace, push %ebp and push %ebx show there are two 32-bit words are pushed on the stack. %ebp is the previous function's base pointer and %ebx is the previous function's variable. 
+In each call of test_backtrace, %ebp and %ebx are pushed on the stack. %ebp is the previous function's base pointer and %ebx is the previous function's variable. 
 
 ### Exercise 11
 >  The backtrace function should display a listing of function call frames in the following format:
