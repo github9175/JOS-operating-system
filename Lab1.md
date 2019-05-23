@@ -9,7 +9,7 @@ Getting familiarized with x86 assembly language, the QEMU x86 emulator, and the 
  
 >At what point does the processor start executing 32-bit code? What exactly causes the switch from 16- to 32-bit mode?
 
-lgdt gdtdesc set up the Global Descriptor Table and cr0 is modified to turn on the protected mode.
+lgdt gdtdesc set up the Global Descriptor Table, and cr0 is modified to turn on the protected mode.
 
 >What is the last instruction of the boot loader executed, and what is the first instruction of the kernel it just loaded?
 
@@ -143,7 +143,7 @@ In entry.S, the kernel initializes its stack at bootstacktop. The stack pointer 
 ### Exercise 10. 
 > To become familiar with the C calling conventions on the x86, find the address of the test_backtrace function in obj/kern/kernel.asm, set a breakpoint there, and examine what happens each time it gets called after the kernel starts. How many 32-bit words does each recursive nesting level of test_backtrace push on the stack, and what are those words?
 
-In each call of test_backtrace, %ebp and %ebx are pushed on the stack. %ebp is the previous function's base pointer and %ebx is the previous function's variable. 
+In each call of test_backtrace, %ebp and %ebx are pushed on the stack. %ebp is the previous function's base pointer, and %ebx is the last function's variable. 
 
 ### Exercise 11
 >  The backtrace function should display a listing of function call frames in the following format:
