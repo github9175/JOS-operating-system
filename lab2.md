@@ -2,7 +2,7 @@
 
 ## Lab 2: Memory Management
 
-This lab is about memory management. It has two components. The allocator will operate in units of 4096 bytes, called pages.
+* This lab is about memory management. It has two components. The allocator will operate in units of 4096 bytes, called pages.
 
 The first component is a physical memeory allocator for the kernel, so that the kernel can allocate memory and later free it.
 
@@ -10,7 +10,7 @@ The task will be to maintain data structures that record which physical pages ar
 
 The second component of memory management is virtual memory, which maps the virtual addresses used by kernel and user software to addresses in physical memory. The x86 hardware's memory management unit (MMU) performs the mapping when instructions use memory, consulting a set of page tables. You will modify JOS to set up the MMU's page tables according to a specification we provide.
 
-Lab 2 contains the following new source files, which you should browse through:
+* Lab 2 contains the following new source files, which you should browse through:
 
 inc/memlayout.h
 kern/pmap.c
