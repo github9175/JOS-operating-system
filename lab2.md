@@ -25,3 +25,13 @@
   *  *memlayout.h* and pmap.h define the PageInfo structure that you'll use to keep track of which pages of physical memory are free. 
 
   *  *kclock.c* and *kclock.h* manipulate the PC's battery-backed clock and CMOS RAM hardware, in which the BIOS records the amount of physical memory the PC contains, among other things. The code in pmap.c needs to read this device hardware in order to figure out how much physical memory there is, but that part of the code is done for you: you do not need to know the details of how the CMOS hardware works.
+
+##Part 1: Physical Page Management
+
+The operating system must keep track of which parts of physical RAM are free and which are currently in use. JOS manages the PC's physical memory with page granularity so that it can use the MMU to map and protect each piece of allocated memory.
+
+You'll now write the physical page allocator. It keeps track of which pages are free with a linked list of struct PageInfo objects (which, unlike xv6, are not embedded in the free pages themselves), each corresponding to a physical page.
+
+###Exercise 1.
+
+>In the file kern/pmap.c, you must implement code for the following functions (probably in the order given). boot_alloc(), mem_init() (only up to the call to check_page_free_list(1)), page_init(), page_alloc(), page_free(). check_page_free_list() and check_page_alloc() test your physical page allocator. You should boot JOS and see whether check_page_alloc() reports success. Fix your code so that it passes. You may find it helpful to add your own assert()s to verify that your assumptions are correct.
