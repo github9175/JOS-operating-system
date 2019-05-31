@@ -48,6 +48,15 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 
 >check_page_free_list() and check_page_alloc() test your physical page allocator. You should boot JOS and see whether check_page_alloc() reports success. Fix your code so that it passes. You may find it helpful to add your own assert()s to verify that your assumptions are correct.
 
+boot_alloc() is called in mem_init() and page_init(). Related codes in mem_init() are:
+```{r}
+//create initial page directory
+kern_pgdir = (pde_t \*) boot_alloc(PGSIZE); 
+memset(kern_pgdir, 0, PGSIZE);
+```
+Thus boot_alloc keeps track of the address for allocated pages; memset sets the memory content to be 0.
+
+boot_alloc():
 ```{r}
 // This simple physical memory allocator is used only while JOS is setting
 // up its virtual memory system.  page_alloc() is the real allocator.
