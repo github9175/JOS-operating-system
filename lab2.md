@@ -102,3 +102,13 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 		return result;
 	}
 	```
+
+//////////////////////////////////////////////////////////////////////
+	// Allocate an array of npages 'struct PageInfo's and store it in 'pages'.
+	// The kernel uses this array to keep track of physical pages: for
+	// each physical page, there is a corresponding struct PageInfo in this
+	// array.  'npages' is the number of physical pages in memory.  Use memset
+	// to initialize all fields of each struct PageInfo to 0.
+	// Your code goes here:
+	pages = (struct PageInfo*) boot_alloc(npages * sizeof(struct PageInfo);
+	memset(pages, 0, npages * sizeof(struct PageInfo));
