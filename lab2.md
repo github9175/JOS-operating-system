@@ -104,6 +104,7 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 	```
 
 * The code we need to implement in mem_init() is to allocate an array to store each page‘s information.
+
 	mem_init():
 	```{r}
 	//////////////////////////////////////////////////////////////////////
