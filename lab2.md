@@ -117,3 +117,50 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 	pages = (struct PageInfo*) boot_alloc(npages * sizeof(struct PageInfo);
 	memset(pages, 0, npages * sizeof(struct PageInfo));
 	```
+// --------------------------------------------------------------
+// Tracking of physical pages.
+// The 'pages' array has one 'struct PageInfo' entry per physical page.
+// Pages are reference counted, and free pages are kept on a linked list.
+// --------------------------------------------------------------
+
+//
+// Initialize page structure and memory free list.
+// After this is done, NEVER use boot_alloc again.  ONLY use the page
+// allocator functions below to allocate and deallocate physical
+// memory via the page_free_list.
+//
+void
+page_init(void)
+{
+	// The example code here marks all physical pages as free.
+	// However this is not truly the case.  What memory is free?
+	//  1) Mark physical page 0 as in use.
+	//     This way we preserve the real-mode IDT and BIOS structures
+	//     in case we ever need them.  (Currently we don't, but...)
+	//  2) The rest of base memory, [PGSIZE, npages_basemem * PGSIZE)
+	//     is free.
+	//  3) Then comes the IO hole [IOPHYSMEM, EXTPHYSMEM), which must
+	//     never be allocated.
+	//  4) Then extended memory [EXTPHYSMEM, ...).
+	//     Some of it is in use, some is free. Where is the kernel
+	//     in physical memory?  Which pages are already in use for
+	//     page tables and other data structures?
+	//
+	// Change the code to reflect this.
+	// NB: DO NOT actually touch the physical memory corresponding to
+	// free pages!
+	size_t i;
+	page_free_list = null;
+	pages[0].pp_ref = 1;
+
+	for (i = 1; i < npages_basemem; i++) {
+		pages[i].pp_ref = 0;
+		pages[i].pp_link = page_free_list;
+		page_free_list = &pages[i];
+	}
+	for (i = PADDR(boot_alloc(0))/PGSIZE; i < npages; i++) {
+		pages[i].pp_ref = 0;
+		pages[i].pp_link = page_free_list;
+		page_free_list = &pages[i];
+	}
+}
