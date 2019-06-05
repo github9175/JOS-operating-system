@@ -169,3 +169,49 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 		}
 	}
 	```
+
+//
+// Allocates a physical page.  If (alloc_flags & ALLOC_ZERO), fills the entire
+// returned physical page with '\0' bytes.  Does NOT increment the reference
+// count of the page - the caller must do these if necessary (either explicitly
+// or via page_insert).
+//
+// Be sure to set the pp_link field of the allocated page to NULL so
+// page_free can check for double-free bugs.
+//
+// Returns NULL if out of free memory.
+//
+// Hint: use page2kva and memset
+struct PageInfo *
+page_alloc(int alloc_flags)
+{
+	// Fill this function in
+	if(page_free_list == NULL) return NULL;
+        struct PageInfo *pp = page_free_list;
+	page_free_list = pp->pp_link;
+	pp->pp_link = NULL;
+	if(alloc_flags & ALLOC_ZERO){
+		memset(page2kva(pp), 0, PGSIZE);
+	}
+	return 0;
+}
+
+//
+// Return a page to the free list.
+// (This function should only be called when pp->pp_ref reaches 0.)
+//
+void
+page_free(struct PageInfo *pp)
+{
+	// Fill this function in
+	// Hint: You may want to panic if pp->pp_ref is nonzero or
+	// pp->pp_link is not NULL.
+	if(pp->pp_ref != 0){
+		panic("pp->pp_ref != 0.");
+	}
+	if(pp->pp_link != NULL){
+		panic("pp->pp_link != NULL.");
+	}
+	pp->link = page_free_list;
+	page_free_list = pp;
+}
