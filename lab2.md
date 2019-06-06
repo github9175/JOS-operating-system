@@ -96,7 +96,7 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 		if(n > 0){
 			nextfree = ROUNDUP(nextfree + n, PGSIZE);
 		}
-		if((uint32_t)nextfree  - KERNBASE > totalmem * 1024){
+		if((uint32_t)nextfree  - KERNBASE > npages * PGSIZE){
 			panic("boot_alloc: Out of memory!\n");
 		}
 		return result;
@@ -114,7 +114,7 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 	// array.  'npages' is the number of physical pages in memory.  Use memset
 	// to initialize all fields of each struct PageInfo to 0.
 	// Your code goes here:
-	pages = (struct PageInfo*) boot_alloc(npages * sizeof(struct PageInfo);
+	pages = (struct PageInfo*) boot_alloc(npages * sizeof(struct PageInfo));
 	memset(pages, 0, npages * sizeof(struct PageInfo));
 	```
 * page_init() marks pages in base memory and unallocated extend memory as free. A free page linked list data structure is used here.
@@ -197,7 +197,7 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 		if(alloc_flags & ALLOC_ZERO){
 			memset(page2kva(pp), 0, PGSIZE);
 		}
-		return 0;
+		return pp;
 	}
 	```
 	
@@ -221,7 +221,7 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 		if(pp->pp_link != NULL){
 			panic("pp->pp_link != NULL.");
 		}
-		pp->link = page_free_list;
+		pp->pp_link = page_free_list;
 		page_free_list = pp;
 	}
 	```
