@@ -225,3 +225,23 @@ You'll now write the physical page allocator. It keeps track of which pages are 
 		page_free_list = pp;
 	}
 	```
+
+### Part 2: Virtual Memory
+
+In x86 terminology, a ```virtual address``` consists of a segment selector and an offset within the segment. A ```linear address``` is what you get after segment translation but before page translation. A ```physical address``` is what you finally get after both segment and page translation and what ultimately goes out on the hardware bus to your RAM.
+
+The JOS kernel often needs to manipulate addresses as opaque values or as integers, without dereferencing them, for example in the physical memory allocator. Sometimes these are virtual addresses, and sometimes they are physical addresses. To help document the code, the JOS source distinguishes the two cases: the type `uintptr_t` represents opaque virtual addresses, and `physaddr_t` represents physical addresses. 
+
+The JOS kernel can dereference a uintptr_t by first casting it to a pointer type. In contrast, the kernel can't sensibly dereference a physical address, since the MMU translates all memory references.
+
+#### Question
+
+> Assuming that the following JOS kernel code is correct, what type should variable x have, uintptr_t or physaddr_t?
+```{r}
+	mystery_t x;
+	char* value = return_a_pointer();
+	*value = 10;
+	x = (mystery_t) value;
+```
+
+Since the kernel can only dereference a uintptr_t 
