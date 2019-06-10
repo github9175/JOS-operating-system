@@ -244,4 +244,4 @@ The JOS kernel can dereference a uintptr_t by first casting it to a pointer type
 	x = (mystery_t) value;
 ```
 
-Since the kernel can only dereference a uintptr_t 
+Since the kernel can only dereference a uintptr_t and variable x could be dereferenced. x is a uintptr_t.
