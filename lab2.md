@@ -253,10 +253,10 @@ Now you'll write a set of routines to manage page tables: to insert and remove l
 
 > In the file kern/pmap.c, you must implement code for the following functions.
 
-        > pgdir_walk()
-        > boot_map_region()
-        > page_lookup()
-        > page_remove()
-        > page_insert()
+        pgdir_walk()
+        boot_map_region()
+        page_lookup()
+        page_remove()
+        page_insert()
 	
 > check_page(), called from mem_init(), tests your page table management routines. You should make sure it reports success before proceeding.
