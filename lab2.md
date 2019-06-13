@@ -245,3 +245,18 @@ The JOS kernel can dereference a uintptr_t by first casting it to a pointer type
 ```
 
 Since the kernel can only dereference a uintptr_t and variable x could be dereferenced. x is a uintptr_t.
+
+#### Page Table Management
+Now you'll write a set of routines to manage page tables: to insert and remove linear-to-physical mappings, and to create page table pages when needed.
+
+#### Exercise 4. 
+
+> In the file kern/pmap.c, you must implement code for the following functions.
+
+        > pgdir_walk()
+        > boot_map_region()
+        > page_lookup()
+        > page_remove()
+        > page_insert()
+	
+> check_page(), called from mem_init(), tests your page table management routines. You should make sure it reports success before proceeding.
