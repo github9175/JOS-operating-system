@@ -260,3 +260,46 @@ Now you'll write a set of routines to manage page tables: to insert and remove l
         page_insert()
 	
 > check_page(), called from mem_init(), tests your page table management routines. You should make sure it reports success before proceeding.
+
+// Given 'pgdir', a pointer to a page directory, pgdir_walk returns
+// a pointer to the page table entry (PTE) for linear address 'va'.
+// This requires walking the two-level page table structure.
+//
+// The relevant page table page might not exist yet.
+// If this is true, and create == false, then pgdir_walk returns NULL.
+// Otherwise, pgdir_walk allocates a new page table page with page_alloc.
+//    - If the allocation fails, pgdir_walk returns NULL.
+//    - Otherwise, the new page's reference count is incremented,
+//	the page is cleared,
+//	and pgdir_walk returns a pointer into the new page table page.
+//
+// Hint 1: you can turn a PageInfo * into the physical address of the
+// page it refers to with page2pa() from kern/pmap.h.
+//
+// Hint 2: the x86 MMU checks permission bits in both the page directory
+// and the page table, so it's safe to leave permissions in the page
+// directory more permissive than strictly necessary.
+//
+// Hint 3: look at inc/mmu.h for useful macros that manipulate page
+// table and page directory entries.
+//
+pte_t *
+pgdir_walk(pde_t *pgdir, const void *va, int create)
+{
+	// Fill this function in
+	pde_t* pageTable = pgdir + PDX(va);
+	
+	if(!(*pageTable & PTE_P)){
+		if(create == false){
+			return NULL;
+		}else{
+			struct PageInfo* page = page_alloc(1);
+			if(page == NULL) return NULL;
+			page->pp_ref++;
+			*pageTable = page2pa(page) | PTE_P | PTE_U | PTE_W;
+		}
+	} 
+	
+	uint32_t* pageT = KADDR(PTE_ADDR(*pageTable));
+	return (pte_t*)(pageT + PTX(va));
+}
