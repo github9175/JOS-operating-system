@@ -261,6 +261,8 @@ Now you'll write a set of routines to manage page tables: to insert and remove l
 	
 > check_page(), called from mem_init(), tests your page table management routines. You should make sure it reports success before proceeding.
 
+pgdir_walk():
+```
 // Given 'pgdir', a pointer to a page directory, pgdir_walk returns
 // a pointer to the page table entry (PTE) for linear address 'va'.
 // This requires walking the two-level page table structure.
@@ -303,3 +305,4 @@ pgdir_walk(pde_t *pgdir, const void *va, int create)
 	uint32_t* pageT = KADDR(PTE_ADDR(*pageTable));
 	return (pte_t*)(pageT + PTX(va));
 }
+```{r}
