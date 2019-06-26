@@ -307,6 +307,8 @@ pgdir_walk(pde_t *pgdir, const void *va, int create)
 }
 ```
 
+boot_map_region(): Map [va, va+size) of virtual address space to physical [pa, pa+size)
+```{r}
 //
 // Map [va, va+size) of virtual address space to physical [pa, pa+size)
 // in the page table rooted at pgdir.  Size is a multiple of PGSIZE, and
@@ -330,3 +332,4 @@ boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm
 		
 	}
 }
+```
