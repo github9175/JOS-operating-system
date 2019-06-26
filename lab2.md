@@ -306,3 +306,27 @@ pgdir_walk(pde_t *pgdir, const void *va, int create)
 	return (pte_t*)(pageT + PTX(va));
 }
 ```
+
+//
+// Map [va, va+size) of virtual address space to physical [pa, pa+size)
+// in the page table rooted at pgdir.  Size is a multiple of PGSIZE, and
+// va and pa are both page-aligned.
+// Use permission bits perm|PTE_P for the entries.
+//
+// This function is only intended to set up the ``static'' mappings
+// above UTOP. As such, it should *not* change the pp_ref field on the
+// mapped pages.
+//
+// Hint: the TA solution uses pgdir_walk
+static void
+boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm)
+{
+	// Fill this function in
+	
+	uint32_t n = size / PGSIZE;
+	for(int i = 0; i < n; i++){
+		pte_t* pte = pgdir_walk(*pgdir, va + i * PGSIZE, 1);
+		*pte = (pa + i * PGSIZE) | oerm | PTE_P;
+		
+	}
+}
