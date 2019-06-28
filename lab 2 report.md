@@ -334,6 +334,8 @@ boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm
 }
 ```
 
+page_lookup():
+```{r}
 //
 // Return the page mapped at virtual address 'va'.
 // If pte_store is not zero, then we store in it the address
@@ -358,3 +360,4 @@ page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
 	
 	return pp;
 }
+```
