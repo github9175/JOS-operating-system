@@ -333,3 +333,28 @@ boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm
 	}
 }
 ```
+
+//
+// Return the page mapped at virtual address 'va'.
+// If pte_store is not zero, then we store in it the address
+// of the pte for this page.  This is used by page_remove and
+// can be used to verify page permissions for syscall arguments,
+// but should not be used by most callers.
+//
+// Return NULL if there is no page mapped at va.
+//
+// Hint: the TA solution uses pgdir_walk and pa2page.
+//
+struct PageInfo *
+page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
+{
+	// Fill this function in
+	pte_t* pte = pgdir_walk(*pgdir, va, 0);
+	if(pte == NULL) return NULL;
+	PageInfo* pp = pa2page(PTE_ADDR(*pte));
+	if(pte_store != 0){
+		*pte_store = pte;
+	}
+	
+	return pp;
+}
