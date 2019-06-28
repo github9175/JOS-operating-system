@@ -26,6 +26,7 @@ Two sets of tools:
 More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
 
 ## Development Logs
+| Lab  | Content | Status | Report | 
 | ---- | ---- | ---- | ---- |
 | Lab1 | Booting | Finished |[Report](/lab1 report.md) |
 | Lab2 | Memory management | Exercise 4 | [Report](/lab2 report.md) |
