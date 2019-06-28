@@ -6,7 +6,6 @@ This project is the course project of MIT's 6.828: Operating System Engineering 
 The operating system we are building is called JOS, has Unix-like functions (e.g., fork, exec), but is implemented in an exokernel style (i.e., the Unix functions are implemented mostly in a user-level library instead of in the kernel).
 
 The labs are split into 6 major parts that build on each other, culminating in a primitive operating system on which one can run simple commands through his own shell.
-
 * Booting
 * Memory management
 * User environments
@@ -19,10 +18,8 @@ To simplify development we use a complete machine simulator (QEMU) for developme
 ## Compilation & Execution
 
 Two sets of tools: 
-
 * an x86 emulator, QEMU, for running the kernel
 * a compiler toolchain, including assembler, linker, C compiler, and debugger, for compiling and testing the kernel. 
-
 More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
 
 ## Development Log
