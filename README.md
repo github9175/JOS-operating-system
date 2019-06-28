@@ -1,6 +1,7 @@
 # JOS-operating-system
 
 ## Introduction
+
 This project is the course project of MIT's 6.828: Operating System Engineering (https://pdos.csail.mit.edu/6.828/2018/overview.html).
 
 The operating system we are building is called JOS, has Unix-like functions (e.g., fork, exec), but is implemented in an exokernel style (i.e., the Unix functions are implemented mostly in a user-level library instead of in the kernel).
@@ -23,6 +24,7 @@ Two sets of tools:
 More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
 
 ## Development Log
+
 | Lab  | Content | Status | Report | 
 | ---- | ---- | ---- | ---- |
 | Lab1 | Booting | Finished |[Report1](https://github.com/smharb/JOS-operating-system/blob/master/Lab1%20Report.md)|
