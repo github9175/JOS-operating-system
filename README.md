@@ -28,8 +28,8 @@ More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
 ## Development Log
 | Lab  | Content | Status | Report | 
 | ---- | ---- | ---- | ---- |
-| Lab1 | Booting | Finished |[Report1](https://github.com/smharb/JOS-operating-system/raw/master/Lab1-report.md)|
-| Lab2 | Memory management | Exercise 4 |[Report2](https://github.com/smharb/JOS-operating-system/raw/master/Lab2-report.md)|
+| Lab1 | Booting | Finished |[Report1](https://github.com/smharb/JOS-operating-system/blob/master/Lab1%20Report.md)|
+| Lab2 | Memory management | Exercise 4 |[Report2](https://github.com/smharb/JOS-operating-system/blob/master/Lab2%20Report.md)|
 | Lab3 | User environments | not start ||
 | Lab4 | Preemptive multitasking | not start | |
 | Lab5 | File system, spawn, and shell | not start | |
