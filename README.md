@@ -3,27 +3,33 @@
 ## Introduction
 This project is the course project of MIT's 6.828: Operating System Engineering (https://pdos.csail.mit.edu/6.828/2018/overview.html).
 
+The operating system we are building is called JOS, has Unix-like functions (e.g., fork, exec), but is implemented in an exokernel style (i.e., the Unix functions are implemented mostly in a user-level library instead of in the kernel).
+
 The labs are split into 6 major parts that build on each other, culminating in a primitive operating system on which one can run simple commands through his own shell.
 
-The operating system we are building is called JOS, has Unix-like functions (e.g., fork, exec), but is implemented in an exokernel style (i.e., the Unix functions are implemented mostly in a user-level library instead of in the kernel). The major parts of the JOS operating system are:
-
-1.Booting
-2.Memory management
-3.User environments
-4.Preemptive multitasking
-5.File system, spawn, and shell
-6.Network driver
+* Booting
+* Memory management
+* User environments
+* Preemptive multitasking
+* File system, spawn, and shell
+* Network driver
 
 To simplify development we use a complete machine simulator (QEMU) for development and debugging.
 
-## Deployment
-two sets of tools in this class: an x86 emulator, QEMU, for running your kernel; and a compiler toolchain, including assembler, linker, C compiler, and debugger, for compiling and testing your kernel. More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
+## Compilation & Execution
 
-## Developement Logs
+Two sets of tools: 
 
-Lab1: Booting Finished
-Lab2: Memory management Exercise 7.
-Lab3: User environments not start
-Lab4: Preemptive multitasking not start
-Lab5: File system, spawn, and shell not start
-Lab6: Network driver not start
+* an x86 emulator, QEMU, for running the kernel
+* a compiler toolchain, including assembler, linker, C compiler, and debugger, for compiling and testing the kernel. 
+
+More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
+
+## Development Logs
+---- | ---- | ---- | ----
+Lab1 | Booting | Finished |[Report](/lab1 report.md)
+Lab2 | Memory management | Exercise 4 | [Report](/lab2 report.md)
+Lab3 | User environments | not start
+Lab4 | Preemptive multitasking | not start
+Lab5 | File system, spawn, and shell | not start
+Lab6 | Network driver | not start
