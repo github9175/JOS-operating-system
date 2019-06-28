@@ -29,7 +29,7 @@ More information, see https://pdos.csail.mit.edu/6.828/2018/tools.html.
 ---- | ---- | ---- | ----
 Lab1 | Booting | Finished |[Report](/lab1 report.md)
 Lab2 | Memory management | Exercise 4 | [Report](/lab2 report.md)
-Lab3 | User environments | not start
-Lab4 | Preemptive multitasking | not start
-Lab5 | File system, spawn, and shell | not start
-Lab6 | Network driver | not start
+Lab3 | User environments | not start |
+Lab4 | Preemptive multitasking | not start |
+Lab5 | File system, spawn, and shell | not start |
+Lab6 | Network driver | not start |
