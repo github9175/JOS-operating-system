@@ -361,3 +361,33 @@ page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
 	return pp;
 }
 ```
+page_remove():
+```{r}
+//
+// Unmaps the physical page at virtual address 'va'.
+// If there is no physical page at that address, silently does nothing.
+//
+// Details:
+//   - The ref count on the physical page should decrement.
+//   - The physical page should be freed if the refcount reaches 0.
+//   - The pg table entry corresponding to 'va' should be set to 0.
+//     (if such a PTE exists)
+//   - The TLB must be invalidated if you remove an entry from
+//     the page table.
+//
+// Hint: The TA solution is implemented using page_lookup,
+// 	tlb_invalidate, and page_decref.
+//
+void
+page_remove(pde_t *pgdir, void *va)
+{
+	// Fill this function in
+	pte_t *pte_store = NULL;
+	struct PageInfo* pp  = page_lookup(pgdir, va, &pte_store);
+	if(pp != NULL){
+		page_decref(pp);
+		tlb_invalidate(pgdir, va);
+		*pte_store = 0;
+	}
+}
+```
