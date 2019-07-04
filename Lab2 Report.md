@@ -391,3 +391,49 @@ page_remove(pde_t *pgdir, void *va)
 	}
 }
 ```
+
+page_insert();
+```{r}
+//
+// Map the physical page 'pp' at virtual address 'va'.
+// The permissions (the low 12 bits) of the page table entry
+// should be set to 'perm|PTE_P'.
+//
+// Requirements
+//   - If there is already a page mapped at 'va', it should be page_remove()d.
+//   - If necessary, on demand, a page table should be allocated and inserted
+//     into 'pgdir'.
+//   - pp->pp_ref should be incremented if the insertion succeeds.
+//   - The TLB must be invalidated if a page was formerly present at 'va'.
+//
+// Corner-case hint: Make sure to consider what happens when the same
+// pp is re-inserted at the same virtual address in the same pgdir.
+// However, try not to distinguish this case in your code, as this
+// frequently leads to subtle bugs; there's an elegant way to handle
+// everything in one code path.
+//
+// RETURNS:
+//   0 on success
+//   -E_NO_MEM, if page table couldn't be allocated
+//
+// Hint: The TA solution is implemented using pgdir_walk, page_remove,
+// and page2pa.
+//
+int
+page_insert(pde_t *pgdir, struct PageInfo *pp, void *va, int perm)
+{
+	// Fill this function in
+	
+	
+	pte_t* pte = pgdir_walk(pgdir, va, true);
+	if(pte == NULL) return -E_NO_MEM;
+	pp->pp_ref++;
+	if(*pte & PTE_P){
+		page_remove(pgdir, va);
+	}
+	
+	*pte = page2pa(pp) | perm | PTE_P;
+	pgdir[PDX[va]] | perm;
+	return 0;
+}
+```
