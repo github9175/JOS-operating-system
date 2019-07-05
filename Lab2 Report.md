@@ -327,7 +327,7 @@ boot_map_region(pde_t *pgdir, uintptr_t va, size_t size, physaddr_t pa, int perm
 	
 	uint32_t n = size / PGSIZE;
 	for(int i = 0; i < n; i++){
-		pte_t* pte = pgdir_walk(*pgdir, va + i * PGSIZE, 1);
+		pte_t* pte = pgdir_walk(pgdir, (const void*)va + i * PGSIZE, 1);
 		*pte = (pa + i * PGSIZE) | perm | PTE_P;
 		
 	}
@@ -351,9 +351,9 @@ struct PageInfo *
 page_lookup(pde_t *pgdir, void *va, pte_t **pte_store)
 {
 	// Fill this function in
-	pte_t* pte = pgdir_walk(*pgdir, va, 0);
+	pte_t* pte = pgdir_walk(pgdir, va, 0);
 	if(pte == NULL) return NULL;
-	PageInfo* pp = pa2page(PTE_ADDR(*pte));
+	struct PageInfo* pp = pa2page(PTE_ADDR(*pte));
 	if(pte_store != 0){
 		*pte_store = pte;
 	}
@@ -433,7 +433,7 @@ page_insert(pde_t *pgdir, struct PageInfo *pp, void *va, int perm)
 	}
 	
 	*pte = page2pa(pp) | perm | PTE_P;
-	pgdir[PDX[va]] | perm;
+	pgdir[PDX(va)] | perm;
 	return 0;
 }
 ```
